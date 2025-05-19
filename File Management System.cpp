@@ -2,13 +2,15 @@
 #include<string>
 using namespace std;
 
-
-
-
-
-
-
-
+struct FileNode {
+    string filename;
+    string content;
+    size_t size;
+   
+    FileNode* prev;
+    FileNode* next;
+    
+};
 
 
 
