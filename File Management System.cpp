@@ -28,8 +28,6 @@ struct FileNode {
 
 
 
-
-
 // Menu display functions
 void displayMainMenu() {
     cout << "\nFile Management System\n";
@@ -84,9 +82,158 @@ void displayFileOperationsMenu() {
     cout << "Enter your choice: ";
 }
 int main() {
+    
+    int choice, subChoice, position;
+    string filename, content;
 
+    while (true) {
+        displayMainMenu();
+        cin >> choice;
+        
 
-
-
-    return 0;
+        switch (choice) {
+            case 1: // Create File
+                while (true) {
+                    displayCreateMenu();
+                    cin >> subChoice;
+                    
+                    
+                    if (subChoice == 0) break;
+                    
+                    cout << "Enter filename: ";
+                    getline(cin, filename);
+                    
+                    switch (subChoice) {
+                        case 1:
+                            
+                            break;
+                        case 2:
+                            cout << "Enter position: ";
+                            cin >> position;
+                           
+                            break;
+                        case 3:
+                            
+                            break;
+                        default:
+                            cout << "Invalid choice.\n";
+                    }
+                }
+                break;
+                
+            case 2: // Delete File
+                while (true) {
+                    displayDeleteMenu();
+                    cin >> subChoice;
+                   
+                    
+                    if (subChoice == 0) break;
+                    
+                    switch (subChoice) {
+                        case 1:
+                  
+                            break;
+                        case 2:
+                            cout << "Enter position: ";
+                            cin >> position;
+                            
+                            
+                            break;
+                        case 3:
+                            
+                        
+                            break;
+                        case 4:
+                            cout << "Enter filename to delete: ";
+                            getline(cin, filename);
+                            
+                            break;
+                        default:
+                            cout << "Invalid choice.\n";
+                    }
+                }
+                break;
+                
+            case 3: // List Files
+               
+                break;
+                
+            case 4: // Search File
+                cout << "Enter filename to search: ";
+                getline(cin, filename);
+               
+                break;
+                
+            case 5: // Sort Files
+                while (true) {
+                    displaySortMenu();
+                    cin >> subChoice;
+                    
+                    
+                    if (subChoice == 0) break;
+                    
+                    
+                }
+                break;
+                
+            case 6: // File Operations
+                while (true) {
+                    displayFileOperationsMenu();
+                    cin >> subChoice;
+                    
+                    
+                    if (subChoice == 0) break;
+                    
+                    switch (subChoice) {
+                        case 1:
+                            cout << "Enter filename to read: ";
+                            getline(cin, filename);
+                           
+                            break;
+                        case 2:
+                            cout << "Enter filename to append: ";
+                            getline(cin, filename);
+                            cout << "Enter content to append: ";
+                            getline(cin, content);
+                            
+                            break;
+                        case 3:
+                            cout << "Enter filename to overwrite: ";
+                            getline(cin, filename);
+                            cout << "Enter new content: ";
+                            getline(cin, content);
+                            
+                            break;
+                        case 4:
+                            cout << "Enter filename for statistics: ";
+                            getline(cin, filename);
+                           
+                            break;
+                        case 5:
+                            cout << "Enter filename to display from memory: ";
+                            getline(cin, filename);
+                            
+                            break;
+                        case 6:
+                            
+                            break;
+                        default:
+                            cout << "Invalid choice.\n";
+                    }
+                }
+                break;
+                
+            case 7: // Delete All Files
+                
+                break;
+                
+            case 0:
+                cout << "Exiting program.\n";
+                return 0;
+                
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
+    }
+     return 0;
 }
