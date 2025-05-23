@@ -107,26 +107,103 @@ struct FileList {
     }
 
 
+// Get file content
+    string getFileContent(const string& filename) const {
+        FileNode* fileNode = getFileNode(filename);
+        return fileNode ? fileNode->content : "";
+    }
+
+// Update file content and statistics
+    void updateFileContent(const string& filename, const string& content) {
+        FileNode* fileNode = getFileNode(filename);
+        if (fileNode) {
+            fileNode->content = content;
+            fileNode->updateFileStats();
+        }
+    }
+
+// Display file statistics
+    void fileStatistics(const string& filename) {
+        if (fileList.contains(filename)) {
+            displayFileStats(filename);
+        } else {
+            cout << "File not found in managed list.\n";
+        }
+    }
+
+    // Display file content from memory
+    void displayFileContent(const string& filename) {
+        FileNode* fileNode = fileList.getFileNode(filename);
+        if (fileNode) {
+            cout << "Content of " << filename << " from memory:\n";
+            cout << fileNode->content;
+        } else {
+            cout << "File not found in memory.\n";
+        }
+    }
 
 
+    // Search files by prefix
+    void searchFilesByPrefix() {
+        string prefix;
+        cout << "Enter filename prefix to search: ";
+        getline(cin, prefix);
+        fileList.searchByPrefix(prefix);
+    }
+// Display file statistics
+    void displayFileStats(const string& filename) {
+        FileNode* fileNode = fileList.getFileNode(filename);
+        if (fileNode) {
+            cout << "File: " << filename << "\n";
+            cout << "Type: " << fileTypeToString(fileNode->type) << "\n";
+            cout << "Size: " << fileNode->size << " bytes\n";
+            cout << "Last Modified: " << ctime(&fileNode->lastModified);
+            int lineCount = count(fileNode->content.begin(), fileNode->content.end(), '\n');
+            cout << "Lines: " << lineCount << "\n";
+        } else {
+            cout << "File not found in memory.\n";
+        }
+    }
+ // Append content to a file
+    void updateFile(const string& filename, const string& content) {
+        if (!fileList.contains(filename)) {
+            cout << "File doesn't exist. Create it first.\n";
+            return;
+        }
 
+        ofstream file(filename, ios::app);
+        if (file.is_open()) {
+            file << content << '\n';
+            cout << "Content appended to '" << filename << "' successfully.\n";
+            file.close();
+            
+            // Update the content in our list
+            string currentContent = fileList.getFileContent(filename);
+            fileList.updateFileContent(filename, currentContent + content + "\n");
+        } else {
+            cout << "Error: Unable to open file '" << filename << "'.\n";
+        }
+    }
 
+    // Overwrite file content
+    void overwriteFile(const string& filename, const string& content) {
+        if (!fileList.contains(filename)) {
+            cout << "File doesn't exist. Create it first.\n";
+            return;
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        ofstream file(filename);
+        if (file.is_open()) {
+            file << content;
+            cout << "File '" << filename << "' overwritten successfully.\n";
+            file.close();
+            
+            // Update the content in our list
+            fileList.updateFileContent(filename, content);
+        } else {
+            cout << "Error: Unable to open file '" << filename << "'.\n";
+        }
+    }
 
 
 
