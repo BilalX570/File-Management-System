@@ -1,4 +1,5 @@
 #include<iostream>
+#include <algorithm>
 #include<string>
 using namespace std;
 
@@ -107,101 +108,6 @@ struct FileList {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void removeFileFromBeginning() {
         if (isEmpty()) {
             cout << "List is empty.\n";
@@ -306,7 +212,131 @@ void removeFileFromBeginning() {
         }
     }
 
+    // Bubble sort implementation for sorting by name
+    void sortByName() {
+        if (size <= 1) return;
 
+        bool swapped;
+        do {
+            swapped = false;
+            FileNode* current = head;
+            FileNode* nextNode = head->next;
+            FileNode* last = nullptr;
+
+            while (nextNode != nullptr) {
+                if (current->filename > nextNode->filename) {
+                    // Swap the nodes
+                    if (current->prev) {
+                        current->prev->next = nextNode;
+                    } else {
+                        head = nextNode;
+                    }
+                    
+                    if (nextNode->next) {
+                        nextNode->next->prev = current;
+                    } else {
+                        tail = current;
+                    }
+                    
+                    current->next = nextNode->next;
+                    nextNode->prev = current->prev;
+                    current->prev = nextNode;
+                    nextNode->next = current;
+                    
+                    swapped = true;
+                    nextNode = current->next;
+                } else {
+                    current = nextNode;
+                    nextNode = nextNode->next;
+                }
+            }
+            last = current;
+        } while (swapped);
+    }
+
+    // Bubble sort implementation for sorting by size
+    void sortBySize() {
+        if (size <= 1) return;
+
+        bool swapped;
+        do {
+            swapped = false;
+            FileNode* current = head;
+            FileNode* nextNode = head->next;
+            FileNode* last = nullptr;
+
+            while (nextNode != nullptr) {
+                if (current->size > nextNode->size) {
+                    // Swap the nodes
+                    if (current->prev) {
+                        current->prev->next = nextNode;
+                    } else {
+                        head = nextNode;
+                    }
+                    
+                    if (nextNode->next) {
+                        nextNode->next->prev = current;
+                    } else {
+                        tail = current;
+                    }
+                    
+                    current->next = nextNode->next;
+                    nextNode->prev = current->prev;
+                    current->prev = nextNode;
+                    nextNode->next = current;
+                    
+                    swapped = true;
+                    nextNode = current->next;
+                } else {
+                    current = nextNode;
+                    nextNode = nextNode->next;
+                }
+            }
+            last = current;
+        } while (swapped);
+    }
+
+    // Bubble sort implementation for sorting by modification date
+    void sortByModifiedDate() {
+        if (size <= 1) return;
+
+        bool swapped;
+        do {
+            swapped = false;
+            FileNode* current = head;
+            FileNode* nextNode = head->next;
+            FileNode* last = nullptr;
+
+            while (nextNode != nullptr) {
+                if (current->lastModified > nextNode->lastModified) {
+                    // Swap the nodes
+                    if (current->prev) {
+                        current->prev->next = nextNode;
+                    } else {
+                        head = nextNode;
+                    }
+                    
+                    if (nextNode->next) {
+                        nextNode->next->prev = current;
+                    } else {
+                        tail = current;
+                    }
+                    
+                    current->next = nextNode->next;
+                    nextNode->prev = current->prev;
+                    current->prev = nextNode;
+                    nextNode->next = current;
+                    
+                    swapped = true;
+                    nextNode = current->next;
+                } else {
+                    current = nextNode;
+                    nextNode = nextNode->next;
+                }
+            }
+            last = current;
+        } while (swapped);
+    }
 
 
 // Menu display functions
@@ -449,11 +479,11 @@ int main() {
                 while (true) {
                     displaySortMenu();
                     cin >> subChoice;
-                    
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
                     
                     if (subChoice == 0) break;
                     
-                    
+                    fileManager.sortFiles(subChoice);
                 }
                 break;
                 
